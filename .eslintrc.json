@@ -1,0 +1,48 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+				"react-hooks",
+    ],
+    "rules": {
+      "prettier/prettier": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["off"],
+      "react-native/no-inline-styles": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+      "import/prefer-default-export": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
+      "react/self-closing-comp": "off",
+    },
+    "settings": {
+	    "import/resolver": {
+	      "typescript": {}
+	    }
+	  }
+}

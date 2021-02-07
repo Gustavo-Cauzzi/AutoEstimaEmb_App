@@ -1,130 +1,213 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useContext, useState } from 'react';
-import uuid from 'react-native-uuid';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { ToastAndroid } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
+import AppointmentNote from '../@types/AppointmentNote';
 import Client from '../@types/Client';
+import Dept from '../@types/Dept';
+import JsonUserData from '../../usersDataTest.json';
 
+interface NewClientInfo {
+  name: string;
+  telephone: string[];
+  description: string;
+}
 interface ClientContextData {
   clients: Client[];
+  addAppointmentToClient: (clientId: string, info: AppointmentNote) => void;
+  updateClientDescription: (clientId: string, description: string) => void;
+  updateClientDept: (clientId: string, newDeptInfo: Dept) => void;
+  updateClientAppointmentNote: (
+    clientId: string,
+    newAppointmentNoteInfo: AppointmentNote,
+  ) => void;
+  updateClientInfo: (clientId: string, info: NewClientInfo) => void;
 }
 
 const ClientContext = createContext<ClientContextData>({} as ClientContextData);
 
 const ClientProvider: React.FC = ({ children }) => {
-  const [clients, setClients] = useState<Client[]>([
-    {
-      id: uuid.v4(),
-      name: 'José 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+  const [clients, setClients] = useState<Client[]>(JsonUserData);
+
+  const loadAsyncInfo = async () => {
+    const clientsFromStorage = await AsyncStorage.getItem('AppSalao:Clients');
+
+    if (clientsFromStorage) {
+      setClients(JSON.parse(clientsFromStorage));
+    } else {
+      console.log('USER INFO IN STORAGE NOT FOUND - USING TESTING DATA');
+      setClients(JsonUserData);
+    }
+  };
+
+  useEffect(() => {
+    loadAsyncInfo();
+  }, []);
+
+  const refreshClientsInStorage = useCallback(
+    (refreshedClients?: Client[]) => {
+      if (refreshedClients) {
+        AsyncStorage.setItem(
+          'AppSalao:Clients',
+          JSON.stringify(refreshedClients),
+        );
+      } else {
+        AsyncStorage.setItem('AppSalao:Clients', JSON.stringify(clients));
+      }
     },
-    {
-      id: uuid.v4(),
-      name: 'José 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+    [clients],
+  );
+
+  const addAppointmentToClient = useCallback(
+    (clientId: string, info: AppointmentNote) => {
+      const clientExists = clients.find((c) => c.id === clientId);
+      if (!clientExists) {
+        console.log(
+          `Client with id ${clientId} doesn't exist (addAppointmentToClient)`,
+        );
+        return;
+      }
+
+      const refreshedClients = clients.map((c) =>
+        c.id === clientId
+          ? {
+              ...c,
+              appointmentNotes: [
+                ...c.appointmentNotes,
+                {
+                  id: info.id,
+                  date: info.date ? info.date : Date.now(),
+                  description: info.description ? info.description : '',
+                  value: info.value ? info.value : 0,
+                },
+              ],
+            }
+          : c,
+      );
+
+      setClients(refreshedClients);
+      ToastAndroid.show('Atendimento adicionado', ToastAndroid.SHORT);
+      refreshClientsInStorage(refreshedClients);
     },
-    {
-      id: uuid.v4(),
-      name: 'José 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+    [clients, refreshClientsInStorage],
+  );
+
+  const updateClientDescription = useCallback(
+    (clientId: string, description: string) => {
+      const clientExists = clients.find((c) => c.id === clientId);
+      if (!clientExists) {
+        console.log(
+          `Client with id ${clientId} doesn't exist (updateClientDescription)`,
+        );
+        return;
+      }
+
+      const refreshedClients = clients.map((c) =>
+        c.id === clientId
+          ? {
+              ...c,
+              description,
+            }
+          : c,
+      );
+
+      setClients(refreshedClients);
+      refreshClientsInStorage(refreshedClients);
     },
-    {
-      id: uuid.v4(),
-      name: 'José 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+    [clients, refreshClientsInStorage],
+  );
+
+  const updateClientDept = useCallback(
+    (clientId: string, newDeptInfo: Dept) => {
+      const clientExists = clients.find((c) => c.id === clientId);
+      if (!clientExists) {
+        console.log(
+          `Client with id ${clientId} doesn't exist (updateClientDept)`,
+        );
+        return;
+      }
+
+      const refreshedClients = clients.map((c) =>
+        c.id === clientId
+          ? {
+              ...c,
+              currentDept: newDeptInfo,
+            }
+          : c,
+      );
+
+      setClients(refreshedClients);
+      ToastAndroid.show('Dívida Atualizada', ToastAndroid.SHORT);
+      refreshClientsInStorage(refreshedClients);
     },
-    {
-      id: uuid.v4(),
-      name: 'José 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+    [clients, refreshClientsInStorage],
+  );
+
+  const updateClientAppointmentNote = useCallback(
+    (clientId: string, newAppointmentNoteInfo: AppointmentNote) => {
+      const clientExists = clients.find((c) => c.id === clientId);
+      if (!clientExists) {
+        console.log(
+          `Client with id ${clientId} doesn't exist (updateClientAppointmentNote)`,
+        );
+        return;
+      }
+
+      const refreshedClients = clients.map((client) =>
+        client.id === clientId
+          ? {
+              ...client,
+              appointmentNotes: client.appointmentNotes.map((appointment) =>
+                appointment.id === newAppointmentNoteInfo.id
+                  ? newAppointmentNoteInfo
+                  : appointment,
+              ),
+            }
+          : client,
+      );
+
+      setClients(refreshedClients);
+      refreshClientsInStorage(refreshedClients);
     },
-    {
-      id: uuid.v4(),
-      name: 'bdasb 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
+    [clients, refreshClientsInStorage],
+  );
+
+  const updateClientInfo = useCallback(
+    (clientId: string, info: NewClientInfo) => {
+      const clientExists = clients.find((c) => c.id === clientId);
+      if (!clientExists) {
+        console.log(
+          `Client with id ${clientId} doesn't exist (updateClientInfo)`,
+        );
+        return;
+      }
+
+      const { description, name, telephone } = info;
+
+      const refreshedClients = clients.map((client) =>
+        client.id === clientId
+          ? {
+              ...client,
+              name,
+              description,
+              telephone,
+            }
+          : client,
+      );
+
+      setClients(refreshedClients);
+      ToastAndroid.show('Informações Atualizadas', ToastAndroid.SHORT);
+      refreshClientsInStorage(refreshedClients);
     },
-    {
-      id: uuid.v4(),
-      name: 'vdsvds 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'asdsadsa 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'Jsadsa',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'Aaaa 1',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['32133223'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'José 2',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: [],
-    },
-    {
-      id: uuid.v4(),
-      name: 'José 3',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['92093929'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'José 4',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: ['16151656'],
-    },
-    {
-      id: uuid.v4(),
-      name: 'José 5',
-      appointmentNotes: [],
-      appointments: [],
-      currentDept: 0,
-      telephone: [],
-    },
-  ]);
+    [clients, refreshClientsInStorage],
+  );
 
   return (
     <ClientContext.Provider
@@ -138,6 +221,11 @@ const ClientProvider: React.FC = ({ children }) => {
           }
           return 0;
         }),
+        addAppointmentToClient,
+        updateClientDescription,
+        updateClientDept,
+        updateClientAppointmentNote,
+        updateClientInfo,
       }}>
       {children}
     </ClientContext.Provider>

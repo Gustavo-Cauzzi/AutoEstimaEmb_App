@@ -12,6 +12,8 @@ target 'appSalao' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'appSalaoTests' do
     inherit! :complete
     # Pods for testing

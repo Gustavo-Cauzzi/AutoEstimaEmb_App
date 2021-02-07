@@ -1,5 +1,6 @@
 export default interface AppointmentNote {
-  Date: Date;
-  Value: number;
-  Description: string;
-};
+  id: string;
+  date: number;
+  value: number;
+  description: string;
+}

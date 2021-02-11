@@ -13,6 +13,7 @@ import AppointmentNote from '../@types/AppointmentNote';
 import Client from '../@types/Client';
 import Dept from '../@types/Dept';
 import JsonUserData from '../../usersDataTest.json';
+import uuid from 'react-native-uuid';
 
 interface NewClientInfo {
   name: string;
@@ -29,6 +30,7 @@ interface ClientContextData {
     newAppointmentNoteInfo: AppointmentNote,
   ) => void;
   updateClientInfo: (clientId: string, info: NewClientInfo) => void;
+  addNewClient: (info: NewClientInfo) => void;
 }
 
 const ClientContext = createContext<ClientContextData>({} as ClientContextData);
@@ -209,6 +211,30 @@ const ClientProvider: React.FC = ({ children }) => {
     [clients, refreshClientsInStorage],
   );
 
+  const addNewClient = useCallback(
+    (info: NewClientInfo) => {
+      const { name, description, telephone } = info;
+
+      const refreshedClients = [
+        ...clients,
+        {
+          id: uuid.v4(),
+          name,
+          description,
+          telephone,
+          appointmentNotes: [],
+          appointments: [],
+          currentDept: {},
+        },
+      ];
+
+      setClients(refreshedClients);
+      refreshClientsInStorage(refreshedClients);
+      ToastAndroid.show('Novo Cliente Adicionado', ToastAndroid.SHORT);
+    },
+    [clients, refreshClientsInStorage],
+  );
+
   return (
     <ClientContext.Provider
       value={{
@@ -226,6 +252,7 @@ const ClientProvider: React.FC = ({ children }) => {
         updateClientDept,
         updateClientAppointmentNote,
         updateClientInfo,
+        addNewClient,
       }}>
       {children}
     </ClientContext.Provider>

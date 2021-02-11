@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const ModalContainer = styled.View`
   width: 320px;
-  height: 350px;
+  height: 365px;
   background-color: #f2f2db;
   border-radius: 10px;
   padding: 10px 20px;
@@ -79,14 +79,15 @@ export const CustomNameInputContainer = styled.View<{ isActive: boolean }>`
 `;
 
 export const Footer = styled.View`
-  height: 30px;
+  height: 45px;
   width: 100%;
   margin-top: auto;
   margin-bottom: 10px;
 `;
 
 export const ButtonsContainer = styled.View`
-  height: 100%;
+  height: 30px;
+  margin-top: 15px;
   flex-direction: row;
   align-self: flex-end;
   align-items: center;
@@ -172,4 +173,20 @@ export const TextBox = styled.TextInput`
 export const NameTextInput = styled.TextInput`
   color: #777;
   flex: 1;
+`;
+
+export const ErrorMessage = styled.Text`
+  font-size: 10px;
+  flex-wrap: wrap;
+  color: #c53030;
+  font-family: 'Montserrat Regular';
+  margin-left: 5px;
+`;
+
+export const ErrorMessageContainer = styled.View`
+  align-self: stretch;
+  align-items: center;
+  flex-direction: row;
+  padding: 0px 5px;
+  margin-bottom: -5px;
 `;

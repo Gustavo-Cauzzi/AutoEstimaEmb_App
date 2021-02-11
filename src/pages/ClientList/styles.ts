@@ -95,3 +95,25 @@ export const SearchInput = styled(TextInput)`
   font-family: 'Montserrat Regular';
   color: #777;
 `;
+
+export const NewClientButtonContainer = styled.View`
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0px;
+`;
+
+export const NewClientButton = styled(RectButton)`
+  flex: 1;
+  width: 100%;
+  background-color: #e6e6cc;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NewClientButtonText = styled.Text`
+  font-family: 'Montserrat Regular';
+  color: #777;
+`;

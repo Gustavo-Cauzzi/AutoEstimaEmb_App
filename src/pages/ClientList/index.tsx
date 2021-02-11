@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  Animated,
-  FlatList,
-  View,
-  TouchableNativeFeedback,
-  Text,
-} from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Animated, FlatList, View } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -19,6 +13,9 @@ import {
   FloatingSerachButtonContainer,
   Header,
   Logo,
+  NewClientButton,
+  NewClientButtonContainer,
+  NewClientButtonText,
   SearchInput,
   SearchInputContainer,
   Title,
@@ -28,6 +25,7 @@ import {
 import TransparentLogo from '../../../assets/LogoTransparente.png';
 import { useClients } from '../../hooks/clients';
 import Client from '../../@types/Client';
+import AlterClientInfo from '../../components/AlterClientInfo';
 
 interface ClientListProps {
   navigation?: any;
@@ -42,6 +40,7 @@ const HEADER_HEIGHT = 60;
 const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
   const [isSearchModeActive, setIsSearchModeActive] = useState(false);
   const [searchClientsResult, setSearchClientsResult] = useState<Client[]>([]);
+  const [isNewClientModalActive, setIsNewClientModalActive] = useState(false);
 
   const { clients } = useClients();
 
@@ -105,7 +104,19 @@ const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
             { useNativeDriver: true },
           )}
           keyExtractor={(item) => item.id}
-          ListHeaderComponent={<View style={{ height: HEADER_HEIGHT }} />}
+          ListHeaderComponent={() => (
+            <>
+              <View style={{ height: HEADER_HEIGHT }} />
+              <NewClientButtonContainer>
+                <NewClientButton
+                  onPress={() => {
+                    setIsNewClientModalActive(true);
+                  }}>
+                  <NewClientButtonText>+ Novo Cliente</NewClientButtonText>
+                </NewClientButton>
+              </NewClientButtonContainer>
+            </>
+          )}
           renderItem={({ item: client }) => (
             <ClientContainer>
               <ClientButton
@@ -132,6 +143,22 @@ const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
           <IconMaterialCommunityIcons name="magnify" size={30} color={'#777'} />
         )}
       </FloatingSerachButtonContainer>
+
+      <AlterClientInfo
+        client={{
+          id: 'NewClient',
+          appointmentNotes: [],
+          appointments: [],
+          currentDept: {},
+          description: '',
+          name: '',
+          telephone: [],
+        }}
+        active={isNewClientModalActive}
+        onClose={() => {
+          setIsNewClientModalActive(false);
+        }}
+      />
     </Container>
   );
 };

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import IconFeather from 'react-native-vector-icons/Feather';
+
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {
   TouchableNativeFeedback,
   Modal,
   Animated,
   Keyboard,
-  ToastAndroid,
   View,
 } from 'react-native';
+
 import {
   ButtonsContainer,
   ButtonText,
@@ -19,23 +19,20 @@ import {
   CustomNameInputContainer,
   Footer,
   InputText,
-  InputTextLight,
   ModalContainer,
   Title,
-  CurrentValueContainer,
   InputContainer,
   TelephoneInputContainer,
-  DateButton,
   DescriptionContainer,
   CustomDescriptionInputContainer,
   TextBox,
   NameTextInput,
   TelephoneContainer,
   InputTextMedium,
+  ErrorMessageContainer,
+  ErrorMessage,
 } from './styles';
-import { TextInput } from 'react-native-gesture-handler';
 import { useClients } from '../../hooks/clients';
-import { formattedDate } from '../../utils/formattedDate';
 import Client from '../../@types/Client';
 
 interface AlterClientInfoProps {
@@ -51,11 +48,12 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
   children,
   client,
 }) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [nameTextBoxValue, setNameTextBoxValue] = useState('0');
   const [descriptionTextBox, setDescriptionTextBox] = useState('');
   const [telephone1TextBox, setTelephone1TextBox] = useState('');
   const [telephone2TextBox, setTelephone2TextBox] = useState('');
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [
     isTelephone1TextBoxSelected,
     setITelephone1TextBoxSelected,
@@ -73,7 +71,7 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
   ] = useState<boolean>(false);
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
-  const { updateClientInfo } = useClients();
+  const { updateClientInfo, addNewClient } = useClients();
 
   useEffect(() => {
     let isCancelled = false;
@@ -111,6 +109,7 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
 
   const handleClosePress = useCallback(() => {
     setIsVisible(false);
+    setErrorMessage('');
     setNameTextBoxValue('');
     setDescriptionTextBox('');
     setTelephone1TextBox('');
@@ -120,13 +119,28 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
 
   const handleSubmitPress = useCallback(() => {
     Keyboard.dismiss();
-    updateClientInfo(client.id, {
-      description: descriptionTextBox,
-      telephone: [telephone1TextBox, telephone2TextBox],
-      name: nameTextBoxValue,
-    });
+
+    if (nameTextBoxValue === '') {
+      setErrorMessage('Por Favor, especifique um nome para o cliente!');
+      return;
+    }
+
+    if (client.id === 'NewClient') {
+      addNewClient({
+        description: descriptionTextBox,
+        telephone: [telephone1TextBox, telephone2TextBox],
+        name: nameTextBoxValue,
+      });
+    } else {
+      updateClientInfo(client.id, {
+        description: descriptionTextBox,
+        telephone: [telephone1TextBox, telephone2TextBox],
+        name: nameTextBoxValue,
+      });
+    }
     handleClosePress();
   }, [
+    addNewClient,
     client.id,
     descriptionTextBox,
     handleClosePress,
@@ -153,7 +167,10 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
           </TouchableNativeFeedback>
         )}
         <ModalContainer>
-          <Title>Atulizar Cliente</Title>
+          <Title>
+            {client.id === 'NewClient' ? 'Novo Cliente' : 'Atulizar Cliente'}
+          </Title>
+
           <InputContainer>
             <InputText>Nome:</InputText>
             <CustomNameInputContainer isActive={isNameTextBoxSelected}>
@@ -233,6 +250,16 @@ const AlterClientInfo: React.FC<AlterClientInfoProps> = ({
             </CustomDescriptionInputContainer>
           </DescriptionContainer>
           <Footer>
+            <ErrorMessageContainer>
+              {errorMessage !== '' ? (
+                <IconMaterialIcons
+                  name="error-outline"
+                  size={10}
+                  color="#c53030"
+                />
+              ) : null}
+              <ErrorMessage>{errorMessage ? errorMessage : null}</ErrorMessage>
+            </ErrorMessageContainer>
             <ButtonsContainer>
               <TouchableNativeFeedback onPress={handleSubmitPress}>
                 <ButtonView>

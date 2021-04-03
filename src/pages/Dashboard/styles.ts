@@ -52,5 +52,3 @@ export const ClientNotesButtonText = styled.Text`
   font-size: 15px;
   font-family: 'Montserrat Regular';
 `;
-
-// export const aa = styled.View``;

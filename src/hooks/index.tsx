@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { SongProvider } from './songs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ClientProvider } from './clients';
 

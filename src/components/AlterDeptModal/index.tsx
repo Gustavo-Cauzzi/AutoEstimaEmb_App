@@ -69,7 +69,7 @@ const AlterDeptModal: React.FC<AlterDeptModalProps> = ({
           client.currentDept.value ? String(client.currentDept.value) : '0',
         );
         setSelectedDate(
-          client.currentDept.since
+          client.currentDept?.since
             ? new Date(client.currentDept.since)
             : new Date(Date.now()),
         );

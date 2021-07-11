@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Linking, TouchableOpacity, View } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { isBefore, isAfter } from 'date-fns';
 
 import IconFeather from 'react-native-vector-icons/Feather';
+import IconMaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Client from '../../@types/Client';
 
@@ -104,6 +105,7 @@ const ClientPage: React.FC = () => {
 
   useEffect(() => {
     if (route.params) {
+      console.log("route: ",route.params);
       setClient(route.params as Client);
     }
   }, [route.params]);
@@ -172,6 +174,22 @@ const ClientPage: React.FC = () => {
               }}
             />
           </ClientInfo>
+          {client.telephone.length !== 0 &&
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`whatsapp://send?phone=5554${client.telephone[0]}`)
+              }}
+            >
+              <IconMaterialCommunity
+                name="whatsapp"
+                size={30}
+                style={{
+                  marginTop: 20,
+                  marginRight: 5
+                }}
+              />
+            </TouchableOpacity>
+          }
         </ClientInfoContainer>
       </Header>
       <Content>
@@ -264,7 +282,7 @@ const ClientPage: React.FC = () => {
           }}
           renderContent={() => (
             <AppointmentNotesContent>
-              {client.appointmentNotes.length === 0 ? (
+              {client.appointmentNotes?.length === 0 ? (
                 <EmptyAppointmentsContainer>
                   <EmptyAppointmentsText>
                     Nenhum registro de atendimentos
@@ -273,7 +291,7 @@ const ClientPage: React.FC = () => {
               ) : (
                 <Accordion
                   activeSections={activeSection}
-                  sections={client.appointmentNotes.sort((a, b) =>
+                  sections={client.appointmentNotes?.sort((a, b) =>
                     isBefore(new Date(a.date), new Date(b.date))
                       ? -1
                       : isAfter(new Date(a.date), new Date(b.date))
@@ -353,28 +371,28 @@ const ClientPage: React.FC = () => {
         <DeptContainer>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Title fs={20}>Status de Dívida:</Title>
-            <DebtStatus isInDept={!!client.currentDept.value}>
-              {client.currentDept.value ? 'Devendo' : 'Sem Dívida'}
+            <DebtStatus isInDept={!!client.currentDept?.value}>
+              {client.currentDept?.value ? 'Devendo' : 'Sem Dívida'}
             </DebtStatus>
           </View>
-          {client.currentDept.value ? (
+          {client.currentDept?.value ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Title fs={17}>Quantidade:</Title>
-              <DebtQuantity>R$ {client.currentDept.value}</DebtQuantity>
+              <DebtQuantity>R$ {client.currentDept?.value}</DebtQuantity>
             </View>
           ) : null}
-          {client.currentDept.since ? (
+          {client.currentDept?.since ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Title fs={17}>Desde:</Title>
               <DebtQuantity
                 style={{ fontSize: 15, marginLeft: 5, marginTop: 2 }}>
-                {formattedDate(client.currentDept.since).split('-')[0]}
+                {formattedDate(client.currentDept?.since).split('-')[0]}
               </DebtQuantity>
             </View>
           ) : null}
 
           <ButtonsContainer
-            style={{ marginTop: client.currentDept.value ? 10 : 15 }}>
+            style={{ marginTop: client.currentDept?.value ? 10 : 15 }}>
             <View style={{ marginRight: 10 }}>
               <TouchableNativeFeedback
                 onPress={() => {

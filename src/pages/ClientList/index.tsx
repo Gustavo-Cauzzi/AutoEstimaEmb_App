@@ -92,7 +92,7 @@ const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
         ) : (
           <>
             <Title>Fichário de Clientes</Title>
-            <Logo source={{ uri: TransparentLogo }} />
+            <Logo source={ TransparentLogo } />
           </>
         )}
       </Header>

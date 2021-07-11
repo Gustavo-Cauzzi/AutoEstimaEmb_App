@@ -12,8 +12,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import AppointmentNote from '../@types/AppointmentNote';
 import Client from '../@types/Client';
 import Dept from '../@types/Dept';
-import JsonUserData from '../../usersDataTest.json';
 import uuid from 'react-native-uuid';
+import { database } from '../services/firebase';
+import Appointment from '../@types/Appointment';
+
 
 interface NewClientInfo {
   name: string;
@@ -36,17 +38,35 @@ interface ClientContextData {
 const ClientContext = createContext<ClientContextData>({} as ClientContextData);
 
 const ClientProvider: React.FC = ({ children }) => {
-  const [clients, setClients] = useState<Client[]>(JsonUserData);
+  const [clients, setClients] = useState<Client[]>([]);
 
   const loadAsyncInfo = async () => {
-    const clientsFromStorage = await AsyncStorage.getItem('AppSalao:Clients');
+    // const clientsFromStorage = await AsyncStorage.getItem('AppSalao:Clients');
 
-    if (clientsFromStorage) {
-      setClients(JSON.parse(clientsFromStorage));
-    } else {
-      console.log('USER INFO IN STORAGE NOT FOUND - USING TESTING DATA');
-      setClients(JsonUserData);
-    }
+    // if (clientsFromStorage) {
+    //   setClients(JSON.parse(clientsFromStorage));
+    // } else {
+    //   console.log('USER INFO IN STORAGE NOT FOUND - USING TESTING DATA');
+    //   setClients(JsonUserData);
+    // }
+
+    const clients = await database()
+    .ref('/clients')
+    .once('value')
+    .then(snapshot => snapshot.val());
+
+    const formattedValues = clients.map((client: Partial<Client>) => ({
+      id: client.id,
+      name: client.name,
+      telephone: client.telephone ? client.telephone : [] as string[],
+      description: client.name,
+      appointmentNotes: client.appointmentNotes ? client.appointmentNotes : [] as AppointmentNote[],
+      appointments: client.appointments ? client.appointments : [] as Appointment[],
+      currentDept: client.currentDept ? client.currentDept : {} as Dept,
+      ...client
+    }));
+
+    setClients(formattedValues);
   };
 
   useEffect(() => {
@@ -166,7 +186,7 @@ const ClientProvider: React.FC = ({ children }) => {
         client.id === clientId
           ? {
               ...client,
-              appointmentNotes: client.appointmentNotes.map((appointment) =>
+              appointmentNotes: client.appointmentNotes?.map((appointment) =>
                 appointment.id === newAppointmentNoteInfo.id
                   ? newAppointmentNoteInfo
                   : appointment,

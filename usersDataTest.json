@@ -1,194 +1,196 @@
-[
   {
-    "id": "334dbe16-df8f-478f-90b0-63dea72e5d5e",
-    "name": "Aaaa 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {
-      "value": 200
+    "clients": [
+    {
+      "id": "334dbe16-df8f-478f-90b0-63dea72e5d5e",
+      "name": "Aaaa 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {
+        "value": 200
+      },
+      "telephone": [
+        "32133223"
+      ]
     },
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "56c61974-74c1-4947-a0b8-a866f5e1f8e4",
-    "name": "asdsadsa 1",
-    "appointments": [],
-    "telephone": [
-      "32133223"
-    ],
-    "description": "Jeidjrmr\nFjdjjjjjjjjj",
-    "appointmentNotes": [
-      {
-        "id": "c2e6f227-3151-4b79-b203-f326cddc2fc5",
-        "date": 1612610578324,
-        "description": "Valor tal e deu top bla bla bla",
-        "value": 200
-      },
-      {
-        "id":"0bfe8c3e-e974-4baf-9454-ba91a0e5a52a",
-        "date": 1612610578324,
-        "description": "Valor tal e deu top bla bla bla",
-        "value": 200
-      },
-      {
-        "id":"b62b3947-845f-4e2e-8732-d2f1b10e3bd9",
-        "date": 1612610578324,
-        "description": "Valor tal e deu top bla bla bla \n teste \n \n o valor foi igual a: 20 $$",
-        "value": 200
-      },
-      {
-        "id":"29e79e39-fceb-4ee3-81e9-37ce5d94e8f5",
-        "date": 1612610578324,
-        "description": "Valor tal e deu top bla bla bla",
-        "value": 200
-      },
-      {
-        "id":"cd9f4757-0b01-4c2e-b373-60d0897e1a3e",
-        "date": 1612625558786,
-        "description": "Ghcfy vj. Vhb\nNbg",
-        "value": 50
+    {
+      "id": "56c61974-74c1-4947-a0b8-a866f5e1f8e4",
+      "name": "asdsadsa 1",
+      "appointments": [],
+      "telephone": [
+        "32133223"
+      ],
+      "description": "Jeidjrmr\nFjdjjjjjjjjj",
+      "appointmentNotes": [
+        {
+          "id": "c2e6f227-3151-4b79-b203-f326cddc2fc5",
+          "date": 1612610578324,
+          "description": "Valor tal e deu top bla bla bla",
+          "value": 200
+        },
+        {
+          "id":"0bfe8c3e-e974-4baf-9454-ba91a0e5a52a",
+          "date": 1612610578324,
+          "description": "Valor tal e deu top bla bla bla",
+          "value": 200
+        },
+        {
+          "id":"b62b3947-845f-4e2e-8732-d2f1b10e3bd9",
+          "date": 1612610578324,
+          "description": "Valor tal e deu top bla bla bla \n teste \n \n o valor foi igual a: 20 $$",
+          "value": 200
+        },
+        {
+          "id":"29e79e39-fceb-4ee3-81e9-37ce5d94e8f5",
+          "date": 1612610578324,
+          "description": "Valor tal e deu top bla bla bla",
+          "value": 200
+        },
+        {
+          "id":"cd9f4757-0b01-4c2e-b373-60d0897e1a3e",
+          "date": 1612625558786,
+          "description": "Ghcfy vj. Vhb\nNbg",
+          "value": 50
+        }
+      ],
+      "currentDept": {
+        "value": 35,
+        "since": 1612625679175
       }
-    ],
-    "currentDept": {
-      "value": 35,
-      "since": 1612625679175
+    },
+    {
+      "id": "b4f39a97-cc87-483b-97ef-a641ea94949c",
+      "name": "bdasb 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223",
+        "989865656",
+        "293902910",
+        "8219382190"
+      ]
+    },
+    {
+      "id": "7c70b348-4d90-44b1-a2dd-e3a7ac68ce3f",
+      "name": "José 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
+    },
+    {
+      "id": "06f499a7-636e-48af-bf34-8a0ca6878886",
+      "name": "José 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
+    },
+    {
+      "id": "16df36b9-9330-460f-99e8-b7c2dfaf27f8",
+      "name": "José 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
+    },
+    {
+      "id": "cb5ab351-24d3-406a-8879-9f32af16bcf4",
+      "name": "José 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
+    },
+    {
+      "id": "5e4f57d8-aa0b-4da5-93c3-a31e7699ff03",
+      "name": "José 1",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ],
+      "description": "José Filho do ..."
+    },
+    {
+      "id": "409461d6-1a4b-4329-9c26-4032269b1893",
+      "name": "José 2",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": []
+    },
+    {
+      "id": "2d0c8270-c945-4931-8921-d9328bb5a6cb",
+      "name": "José 3",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "92093929"
+      ]
+    },
+    {
+      "id": "b5270a74-60f4-4a4e-b628-364927e8e128",
+      "name": "José 4",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "telephone": [
+        "16151656"
+      ],
+      "currentDept": {
+        "value": 5,
+        "since": 1612625935967
+      }
+    },
+    {
+      "id": "ee9a0658-7f74-415f-8cb9-20914ae82aa3",
+      "name": "José 5",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": []
+    },
+    {
+      "id": "af3e9cae-3957-44c4-8276-c3f269c767c9",
+      "name": "Jsadsa",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
+    },
+    {
+      "id": "50dc3ad6-77f5-4201-a0d0-175489785a98",
+      "name": "vdsvds 1",
+      "description": "",
+      "appointmentNotes": [],
+      "appointments": [],
+      "currentDept": {},
+      "telephone": [
+        "32133223"
+      ]
     }
-  },
-  {
-    "id": "b4f39a97-cc87-483b-97ef-a641ea94949c",
-    "name": "bdasb 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223",
-      "989865656",
-      "293902910",
-      "8219382190"
-    ]
-  },
-  {
-    "id": "7c70b348-4d90-44b1-a2dd-e3a7ac68ce3f",
-    "name": "José 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "06f499a7-636e-48af-bf34-8a0ca6878886",
-    "name": "José 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "16df36b9-9330-460f-99e8-b7c2dfaf27f8",
-    "name": "José 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "cb5ab351-24d3-406a-8879-9f32af16bcf4",
-    "name": "José 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "5e4f57d8-aa0b-4da5-93c3-a31e7699ff03",
-    "name": "José 1",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ],
-    "description": "José Filho do ..."
-  },
-  {
-    "id": "409461d6-1a4b-4329-9c26-4032269b1893",
-    "name": "José 2",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": []
-  },
-  {
-    "id": "2d0c8270-c945-4931-8921-d9328bb5a6cb",
-    "name": "José 3",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "92093929"
-    ]
-  },
-  {
-    "id": "b5270a74-60f4-4a4e-b628-364927e8e128",
-    "name": "José 4",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "telephone": [
-      "16151656"
-    ],
-    "currentDept": {
-      "value": 5,
-      "since": 1612625935967
-    }
-  },
-  {
-    "id": "ee9a0658-7f74-415f-8cb9-20914ae82aa3",
-    "name": "José 5",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": []
-  },
-  {
-    "id": "af3e9cae-3957-44c4-8276-c3f269c767c9",
-    "name": "Jsadsa",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  },
-  {
-    "id": "50dc3ad6-77f5-4201-a0d0-175489785a98",
-    "name": "vdsvds 1",
-    "description": "",
-    "appointmentNotes": [],
-    "appointments": [],
-    "currentDept": {},
-    "telephone": [
-      "32133223"
-    ]
-  }
-]
+  ]
+}

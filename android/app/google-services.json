@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "992220575915",
+    "firebase_url": "https://autoestimaemb-app-default-rtdb.firebaseio.com",
+    "project_id": "autoestimaemb-app",
+    "storage_bucket": "autoestimaemb-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992220575915:android:3b319f00cf1fdbe2179fee",
+        "android_client_info": {
+          "package_name": "com.cauzzi.autoestimaembapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992220575915-ac1mqht4sfe2h3bp9ct0sn3780adfdc9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cauzzi.autoestimaembapp",
+            "certificate_hash": "8cbaa9f5980e64f1b034eddc0704d48b1e6c54a0"
+          }
+        },
+        {
+          "client_id": "992220575915-mdi45a8hnlc3tojsmbqn87ud7kusm76r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQIi5MIePK-xsVtF5p4s4ooSRNsT9Z1es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992220575915-mdi45a8hnlc3tojsmbqn87ud7kusm76r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

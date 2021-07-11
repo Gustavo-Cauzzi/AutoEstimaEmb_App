@@ -65,3 +65,6 @@ buck-out/
 #salao electron
 /salao-electron/node_modules
 /salao-electron/yarn-error.log
+
+# Env
+.enviroment.js

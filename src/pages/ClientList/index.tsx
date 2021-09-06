@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Animated, FlatList, View } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AnimatedLoader from "react-native-animated-loader";
 
 import {
   ClientButton,
@@ -26,6 +27,7 @@ import TransparentLogo from '../../../assets/LogoTransparente.png';
 import { useClients } from '../../hooks/clients';
 import Client from '../../@types/Client';
 import AlterClientInfo from '../../components/AlterClientInfo';
+import { Text } from 'react-native-svg';
 
 interface ClientListProps {
   navigation?: any;
@@ -42,7 +44,7 @@ const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
   const [searchClientsResult, setSearchClientsResult] = useState<Client[]>([]);
   const [isNewClientModalActive, setIsNewClientModalActive] = useState(false);
 
-  const { clients } = useClients();
+  const { clients, isLoading } = useClients();
 
   const scroll = useMemo(() => new Animated.Value(0), []);
   const animatedScroll = Animated.multiply(
@@ -97,44 +99,56 @@ const ClientList: React.FC<ClientListProps> = ({ navigation }) => {
         )}
       </Header>
       <Content>
-        <AnimatedFlatList
-          data={isSearchModeActive ? searchClientsResult : clients}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scroll } } }],
-            { useNativeDriver: true },
-          )}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={() => (
-            <>
-              <View style={{ height: HEADER_HEIGHT }} />
-              <NewClientButtonContainer>
-                <NewClientButton
+        {isLoading ? (
+          <AnimatedLoader
+            visible={true}
+            overlayColor="rgba(255,255,255,0.75)"
+            source={require("../../../assets/loader.json")}
+            animationStyle={{width: 100, height: 100}}
+            speed={1}
+          >
+            <Text>Doing something...</Text>
+          </AnimatedLoader>
+        ) : (
+          <AnimatedFlatList
+            data={isSearchModeActive ? searchClientsResult : clients}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scroll } } }],
+              { useNativeDriver: true },
+            )}
+            keyExtractor={(item) => item.id}
+            ListHeaderComponent={() => (
+              <>
+                <View style={{ height: HEADER_HEIGHT }} />
+                <NewClientButtonContainer>
+                  <NewClientButton
+                    onPress={() => {
+                      setIsNewClientModalActive(true);
+                    }}>
+                    <NewClientButtonText>+ Novo Cliente</NewClientButtonText>
+                  </NewClientButton>
+                </NewClientButtonContainer>
+              </>
+            )}
+            renderItem={({ item: client }) => (
+              <ClientContainer>
+                <ClientButton
                   onPress={() => {
-                    setIsNewClientModalActive(true);
+                    handleGoToClientPage(client);
                   }}>
-                  <NewClientButtonText>+ Novo Cliente</NewClientButtonText>
-                </NewClientButton>
-              </NewClientButtonContainer>
-            </>
-          )}
-          renderItem={({ item: client }) => (
-            <ClientContainer>
-              <ClientButton
-                onPress={() => {
-                  handleGoToClientPage(client);
-                }}>
-                <UserIconContainer>
-                  <IconFeather
-                    name="user"
-                    size={20}
-                    color={'rgba(60, 60, 60, 0.4)'}
-                  />
-                </UserIconContainer>
-                <ClientName>{client.name}</ClientName>
-              </ClientButton>
-            </ClientContainer>
-          )}
-        />
+                  <UserIconContainer>
+                    <IconFeather
+                      name="user"
+                      size={20}
+                      color={'#3c3c3c66'}
+                    />
+                  </UserIconContainer>
+                  <ClientName>{client.name}</ClientName>
+                </ClientButton>
+              </ClientContainer>
+            )}
+          />
+        )}
       </Content>
       <FloatingSerachButtonContainer onPress={handleSerachButtonPressed}>
         {isSearchModeActive ? (

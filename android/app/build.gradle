@@ -134,6 +134,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        // https://stackoverflow.com/questions/60310873/execution-failed-for-task-appmergedexdebug-firestore-flutter
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -182,6 +185,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    // https://stackoverflow.com/questions/60310873/execution-failed-for-task-appmergedexdebug-firestore-flutter
+    implementation 'com.android.support:multidex:1.0.3'
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

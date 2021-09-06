@@ -24,6 +24,7 @@ interface NewClientInfo {
 }
 interface ClientContextData {
   clients: Client[];
+  isLoading: boolean;
   addAppointmentToClient: (clientId: string, info: AppointmentNote) => void;
   updateClientDescription: (clientId: string, description: string) => void;
   updateClientDept: (clientId: string, newDeptInfo: Dept) => void;
@@ -39,17 +40,9 @@ const ClientContext = createContext<ClientContextData>({} as ClientContextData);
 
 const ClientProvider: React.FC = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadAsyncInfo = async () => {
-    // const clientsFromStorage = await AsyncStorage.getItem('AppSalao:Clients');
-
-    // if (clientsFromStorage) {
-    //   setClients(JSON.parse(clientsFromStorage));
-    // } else {
-    //   console.log('USER INFO IN STORAGE NOT FOUND - USING TESTING DATA');
-    //   setClients(JsonUserData);
-    // }
-
     const clients = await database()
     .ref('/clients')
     .once('value')
@@ -66,6 +59,7 @@ const ClientProvider: React.FC = ({ children }) => {
       ...client
     }));
 
+    setIsLoading(false);
     setClients(formattedValues);
   };
 
@@ -267,6 +261,7 @@ const ClientProvider: React.FC = ({ children }) => {
           }
           return 0;
         }),
+        isLoading,
         addAppointmentToClient,
         updateClientDescription,
         updateClientDept,
